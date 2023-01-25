@@ -22,6 +22,9 @@ public class GradeCalculatorController {
     private Label textGradeDisplay;
     
     @FXML
+    private Label projectErrorLabel;
+    
+    @FXML
     void calculateGrade(ActionEvent event) {
     	double courseGrade = 0;
     	String projectGrade = projectGradeTextField.getText();
