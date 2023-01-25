@@ -31,9 +31,9 @@ public class GradeCalculatorController {
     	
     	double totalChalGrade = (optPassed + chalPassed)*5;//gives the total challenge grade as a percent
 
-    	courseGrade += Double.parseDouble(projectGrade)/2;//adds half of the project grade to the final grade
-    	courseGrade += (quizGrade*2.5);//adds a quarter of the quiz grade to the final
-    	courseGrade += (totalChalGrade)/4;//adds again a quarter of the challenge grade to the final
+    	courseGrade += Double.parseDouble(projectGrade)*.4;//adds half of the project grade to the final grade
+    	courseGrade += (quizGrade*10)*.3;//adds a quarter of the quiz grade to the final
+    	courseGrade += (totalChalGrade)*.3;//adds again a quarter of the challenge grade to the final
     	
     	textGradeDisplay.setText(String.format("Your overall course grade is: %.2f", courseGrade));
     }
