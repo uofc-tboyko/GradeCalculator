@@ -35,7 +35,14 @@ public class GradeCalculatorController {
     	courseGrade += (quizGrade*10)*.3;//adds a quarter of the quiz grade to the final
     	courseGrade += (totalChalGrade)*.3;//adds again a quarter of the challenge grade to the final
     	
+<<<<<<< HEAD
     	textGradeDisplay.setText(String.format("Your overall course grade is: %.2f", courseGrade));//formatting and outputting string
     }
 
 }
+=======
+    	textGradeDisplay.setText(String.format("Your overall course grade is: %.2f", courseGrade));
+    }
+
+}
+>>>>>>> branch 'master' of https://github.com/uofc-tboyko/GradeCalculator/

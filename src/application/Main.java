@@ -8,10 +8,19 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
+<<<<<<< HEAD
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+=======
+
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+
+>>>>>>> branch 'master' of https://github.com/uofc-tboyko/GradeCalculator/
 			FXMLLoader loader = new FXMLLoader();
 			VBox root = loader.load(new FileInputStream("src/application/GradeCalculatorView.fxml"));
 			
