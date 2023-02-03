@@ -35,11 +35,18 @@ public class GradeCalculatorController {
     	
     	//checking for valid numbers in the text field
     	boolean projectGradeValid = true;
+    	
+    	boolean periodUsed = false;
     	for(char c : valueEntered.toCharArray()) {
     		//check if the current character is a digit.
-    		if(!Character.isDigit(c)) {
-    			projectGradeValid = false;
-    			projectErrorLabel.setText("Error: Project Grade contains "+c+". Make sure to enter a number");
+    		if(!Character.isDigit(c)&&c!='-') {
+    			if(periodUsed) {
+    				projectGradeValid = false;
+    				projectErrorLabel.setText("Error: Project Grade contains "+c+". Make sure to enter a number");
+    			}
+    			else {
+    				periodUsed=true;
+    			}
     		}
     	}
     	
@@ -63,19 +70,19 @@ public class GradeCalculatorController {
     void calculateGrade(ActionEvent event) {
     	projectErrorLabel.setText("");
     	double courseGrade = 0;
-    	//retrieve the project grade and add 40% to the course grade
+    	//retrieve the project grade and add 50% to the course grade
     	double projectGrade = getProjectGrade(projectGradeTextField.getText());
-    	courseGrade += projectGrade*.4;
+    	courseGrade += projectGrade*.5;
     	
-    	//retrieve the quiz grade and add 30% to the course grade
+    	//retrieve the quiz grade and add 25% to the course grade
     	double quizGrade = quizSlider.getValue();
-    	courseGrade += (quizGrade*10)*.3;
+    	courseGrade += (quizGrade*10)*.25;
     	
-    	//retrieve the choice box values for the quizzes and add 30% of the total percent to the final grade.
+    	//retrieve the choice box values for the quizzes and add 25% of the total percent to the final grade.
     	int chalPassed = challengesPassedChoiceBox.getValue();
     	int optPassed = optPassedChoiceBox.getValue();
     	double totalChalGrade = (optPassed + chalPassed)*5;
-    	courseGrade += (totalChalGrade)*.3;
+    	courseGrade += (totalChalGrade)*.25;
     	
     	textGradeDisplay.setText(String.format("Your overall course grade is: %.2f", courseGrade));//formatting and outputting string
     }
