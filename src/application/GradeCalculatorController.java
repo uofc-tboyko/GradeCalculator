@@ -35,23 +35,24 @@ public class GradeCalculatorController {
     	
     	//checking for valid numbers in the text field
     	boolean projectGradeValid = true;
-    	
     	boolean periodUsed = false;
+    	double projectGrade = 0.0;
+    	
     	for(char c : valueEntered.toCharArray()) {
     		//check if the current character is a digit.
-    		if(!Character.isDigit(c)&&c!='-') {
-    			if(periodUsed) {
+    		if(!(Character.isDigit(c)||c=='-')) {
+    			if(periodUsed||c!='.') {
     				projectGradeValid = false;
     				projectErrorLabel.setText("Error: Project Grade contains "+c+". Make sure to enter a number");
+    				projectGrade = 0;
     			}
-    			else {
+    			else if(!periodUsed&&c=='.') {
     				periodUsed=true;
     			}
     		}
     	}
     	
     	//convert the input to double if the input is valid. Otherwise it will be 0
-    	double projectGrade = 0;
     	if (projectGradeValid) {
     		projectGrade = Double.parseDouble(valueEntered);
     	}
