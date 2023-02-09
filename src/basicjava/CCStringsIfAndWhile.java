@@ -12,16 +12,18 @@ public class CCStringsIfAndWhile {
 	}
 	
 	public static int count(String str, String chars) {
-		char strArray[] = str.toCharArray();
-		char charArray[] = chars.toCharArray();
+		if(str==""||chars=="") {
+			return 0;
+		}
+		char[] strArray = str.toLowerCase().toCharArray();
+		char[] charArray = chars.toLowerCase().toCharArray();
 		int matches = 0;
 		
-		for(char a : strArray) {
-			for(char b : charArray) {
-				if(a!=b) {
-					break;
+		for(char s:strArray) {
+			for(char c:charArray) {
+				if(s==c) {
+					matches++;
 				}
-				matches+=1;
 			}
 		}
 		
@@ -29,15 +31,15 @@ public class CCStringsIfAndWhile {
 	}
 	
 	public static int smallestDigit(int num) {
-		int smallest = 9;
-		if (num<0) {
-			num*=-1;
-		}
-		while(num>-1) {
+		int smallest = num%10;
+		while(num!=0) {
 			if(num%10<smallest) {
 				smallest = num%10;
 			}
 			num/=10;
+		}
+		if (smallest<0) {
+			smallest+=10;
 		}
 		return smallest;
 	}
