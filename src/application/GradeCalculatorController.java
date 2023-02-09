@@ -1,14 +1,16 @@
 package application;
 
 import javafx.event.ActionEvent;
-
+import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 public class GradeCalculatorController {
+	Stage applicationStage;
 
 	@FXML
-	private Slider quizSlider;
+	private ChoiceBox<Integer> quizzesCompletedChoiceBox;
     @FXML
     private ChoiceBox<Integer> optPassedChoiceBox;
 
@@ -66,6 +68,11 @@ public class GradeCalculatorController {
     	
     	return projectGrade;
     }
+    @FXML
+    void getQuizGrades(ActionEvent event) {
+    	Scene quizGradesScene = new Scene(new Label("Placeholder"));
+    	applicationStage.setScene(quizGradesScene);
+    }
     
     @FXML
     void calculateGrade(ActionEvent event) {
@@ -76,7 +83,7 @@ public class GradeCalculatorController {
     	courseGrade += projectGrade*.5;
     	
     	//retrieve the quiz grade and add 25% to the course grade
-    	double quizGrade = quizSlider.getValue();
+    	double quizGrade = quizzesCompletedChoiceBox.getValue();
     	courseGrade += (quizGrade*10)*.25;
     	
     	//retrieve the choice box values for the quizzes and add 25% of the total percent to the final grade.
