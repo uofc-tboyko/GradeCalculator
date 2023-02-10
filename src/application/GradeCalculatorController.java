@@ -115,7 +115,6 @@ public class GradeCalculatorController {
     	
     	return projectGrade;
     }
-
     
     @FXML
     void calculateGrade(ActionEvent event) {
