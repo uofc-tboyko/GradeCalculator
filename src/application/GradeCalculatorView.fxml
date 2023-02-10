@@ -78,7 +78,7 @@
 					<Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
 				</HBox.margin> 
             </Label>
-            <ChoiceBox fx:id="optPassedChoiceBox" prefWidth="150.0">
+            <ChoiceBox fx:id="optPassedChoiceBox" prefWidth="150.0" >
 	            <items>
 	            	<FXCollections fx:factory="observableArrayList">
 	            		<Integer fx:value="0" />

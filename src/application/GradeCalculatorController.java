@@ -1,10 +1,14 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class GradeCalculatorController {
 	Stage applicationStage;
@@ -26,6 +30,49 @@ public class GradeCalculatorController {
     @FXML
     private Label projectErrorLabel;
     
+    double averageQuizGrade = 0.0;
+
+    @FXML
+    void getQuizGrades(ActionEvent enterQuizGradeEvent) {
+    	//define vars
+    	Scene mainScene = applicationStage.getScene();
+    	
+    	int numberOfQuizzes = quizzesCompletedChoiceBox.getValue();
+    	int rowsCreated = 0;
+    	VBox quizGradeContainer = new VBox();
+    	
+    	//create the proper number of widgets and add them to the scene, with the text fields being added to an arraylist.
+    	ArrayList<TextField> quizGradeTextFields = new ArrayList<TextField>();
+    	while(rowsCreated<numberOfQuizzes) {
+			HBox rowContainer = new HBox();
+			Label quizGradeLabel = new Label("Quiz Grade #"+(rowsCreated+1)+":");
+			TextField quizGradeTextField = new TextField();
+
+			quizGradeTextFields.add(quizGradeTextField);
+			rowContainer.getChildren().addAll(quizGradeLabel,quizGradeTextField);
+			rowsCreated++;
+			
+			quizGradeContainer.getChildren().addAll(rowContainer);
+    	}
+    	
+    	//add done button and add to scene.
+		Button doneButton = new Button("Done");
+		doneButton.setOnAction(doneEvent -> calculateAverageQuizGrade(mainScene, quizGradeTextFields));
+		quizGradeContainer.getChildren().add(doneButton);
+    	
+		Scene quizGradesScene = new Scene(quizGradeContainer);
+		applicationStage.setScene(quizGradesScene);
+    }
+    
+    void calculateAverageQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextFields) {
+    	applicationStage.setScene(mainScene);
+    	averageQuizGrade = 0.0;
+    	for (TextField quizGradeTextField : quizGradeTextFields) {
+			averageQuizGrade += Double.parseDouble(quizGradeTextField.getText());
+    	}
+    	averageQuizGrade/=quizGradeTextFields.size();
+    }
+
     /*
      * Convert the value entered from a string to a double. The value returned will be 0 if the string contains non-digit
      * values or if the value after conversion to double is out of the range 0-100%
@@ -68,11 +115,7 @@ public class GradeCalculatorController {
     	
     	return projectGrade;
     }
-    @FXML
-    void getQuizGrades(ActionEvent event) {
-    	Scene quizGradesScene = new Scene(new Label("Placeholder"));
-    	applicationStage.setScene(quizGradesScene);
-    }
+
     
     @FXML
     void calculateGrade(ActionEvent event) {
@@ -81,10 +124,13 @@ public class GradeCalculatorController {
     	//retrieve the project grade and add 50% to the course grade
     	double projectGrade = getProjectGrade(projectGradeTextField.getText());
     	courseGrade += projectGrade*.5;
+    	System.out.println("Project Grade: "+projectGrade);
     	
     	//retrieve the quiz grade and add 25% to the course grade
-    	double quizGrade = quizzesCompletedChoiceBox.getValue();
-    	courseGrade += (quizGrade*10)*.25;
+
+    	double quizzesDone = quizzesCompletedChoiceBox.getValue();
+    	courseGrade += (averageQuizGrade)*.25;
+    	System.out.println("Avg Quiz Grade: " +averageQuizGrade);
     	
     	//retrieve the choice box values for the quizzes and add 25% of the total percent to the final grade.
     	int chalPassed = challengesPassedChoiceBox.getValue();
