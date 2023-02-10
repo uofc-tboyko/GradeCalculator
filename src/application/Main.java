@@ -17,7 +17,7 @@ public class Main extends Application {
 			GradeCalculatorController controller = (GradeCalculatorController)loader.getController();
 			controller.applicationStage = primaryStage;
 			
-			Scene scene = new Scene(root,600,400);
+			Scene scene = new Scene(root,800,400);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Thomas' Grade Calculator");
 			primaryStage.show();
