@@ -44,8 +44,7 @@ public class GradeCalculatorController {
     @FXML
     private Label averageQuizLabel;
     
-    double averageQuizGrade = 0.0;
-    double optionalQuizGrade =0.0;
+    double optionalQuizGrade = 0.0;
     double requiredQuizGrade = 0.0;
 
     @FXML
@@ -54,10 +53,11 @@ public class GradeCalculatorController {
     }
     @FXML
     void getRequiredQuizGrades(ActionEvent getRequiredQuizGrades) {
-    	getQuizGrades(false, 15);
+    	getQuizGrades(false, requiredQuizzesCompletedChoiceBox.getValue());
     }
     void getQuizGrades(boolean quizzesOptional, int numberOfQuizzes) {
     	//define vars
+
     	Scene mainScene = applicationStage.getScene();
     	
     	int rowsCreated = 0;
@@ -94,36 +94,35 @@ public class GradeCalculatorController {
     
     void calculateAverageQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextFields, boolean quizzesOptional) {
 		applicationStage.setScene(mainScene);
-		optionalQuizGrade = 0;
-		requiredQuizGrade = 0;
 		//if the quiz page we've entered is optional, we'll check only for the best 5 of 7 grades.
     	if(quizzesOptional) {
+    		optionalQuizGrade = 0;
     		ArrayList<Double> optionalGrades = new ArrayList<Double>();
     		
 			for (TextField quizGradeTextField : quizGradeTextFields) {
 				optionalGrades.add(Double.parseDouble(quizGradeTextField.getText()));
 			}
 			Collections.sort(optionalGrades,Collections.reverseOrder());
-			for(int i = 0; i<=5;i++) {
-				optionalQuizGrade+=10*optionalGrades.get(5-i);
+
+			for(int i=0; i<5&&i<optionalGrades.size();i++) {
+				optionalQuizGrade+=optionalGrades.get(i);
 			}
-			optionalQuizGrade/=5;
+			optionalQuizGrade*=2.0;
 			optionalQuizLabel.setText(String.format("Average: %.2f",optionalQuizGrade)+"%");
-			
-			System.out.println(optionalQuizGrade);
     	} 
     	
     	//for the required quizzes we add all of them to the total and make it out of 15.
     	else {
+		requiredQuizGrade = 0;
 			for (TextField quizGradeTextField : quizGradeTextFields) {
-				requiredQuizGrade += 10*Double.parseDouble(quizGradeTextField.getText());
+				requiredQuizGrade += Double.parseDouble(quizGradeTextField.getText());
 			}
-			requiredQuizGrade/=15;
-			requiredQuizLabel.setText(String.format("Average: %.2f", requiredQuizGrade)+"%");
+			requiredQuizGrade*=10.0;
+			requiredQuizGrade/=15.0;
+			requiredQuizLabel.setText(String.format("Average: %.2f",requiredQuizGrade)+"%");
     	}
     	//calculate and update average quiz grades which will be done regardless.
-    	averageQuizGrade = (requiredQuizGrade*.75 + optionalQuizGrade *.25);
-    	averageQuizLabel.setText(String.format("Overall quiz average: %.2f", averageQuizGrade)+"%");
+    	averageQuizLabel.setText(String.format("Overall quiz average: %.2f", (requiredQuizGrade*.75+optionalQuizGrade*.25))+"%");
     }
 
     /*
@@ -165,27 +164,19 @@ public class GradeCalculatorController {
     		projectErrorLabel.setText("Error: Project Grade should be between 0% and 100%");
     		projectGrade = 0;
     	} 
-    	
     	return projectGrade;
     }
     
     @FXML
     void calculateGrade(ActionEvent event) {
     	projectErrorLabel.setText("");
-    	double courseGrade = 0;
-    	//retrieve the project grade and add 50% to the course grade
+    	double courseGrade = 0.0;
     	double projectGrade = getProjectGrade(projectGradeTextField.getText());
-    	courseGrade += projectGrade*.5;
     	System.out.println("Project Grade: "+projectGrade);
-    	
-    	//retrieve the quiz grade and add 25% to the course grade
-
-    	courseGrade += (averageQuizGrade)*.25;
-    	System.out.println("Avg Quiz Grade: " +averageQuizGrade);
     	
     	//retrieve the choice box values for the quizzes and add 25% of the total percent to the final grade.
     	double totalChalGrade = (optPassedChoiceBox.getValue() + challengesPassedChoiceBox.getValue())*5;
-    	courseGrade += (totalChalGrade)*.25;
+    	courseGrade += (totalChalGrade*.25)+(.1875*requiredQuizGrade+.0625*optionalQuizGrade)+(projectGrade*0.5);
     	
     	textGradeDisplay.setText(String.format("Your overall course grade is: %.2f", courseGrade));//formatting and outputting string
     }
