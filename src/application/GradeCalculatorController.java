@@ -41,9 +41,6 @@ public class GradeCalculatorController {
     @FXML
     private Label optionalQuizLabel;
     
-    @FXML
-    private Label averageQuizLabel;
-    
     double optionalQuizGrade = 0.0;
     double requiredQuizGrade = 0.0;
 
@@ -121,8 +118,6 @@ public class GradeCalculatorController {
 			requiredQuizGrade/=15.0;
 			requiredQuizLabel.setText(String.format("Average: %.2f",requiredQuizGrade)+"%");
     	}
-    	//calculate and update average quiz grades which will be done regardless.
-    	averageQuizLabel.setText(String.format("Overall quiz average: %.2f", (requiredQuizGrade*.75+optionalQuizGrade*.25))+"%");
     }
 
     /*

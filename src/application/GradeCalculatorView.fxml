@@ -174,11 +174,6 @@
 		 	<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 		 </VBox.margin>
       </HBox>
-	  <Label text="Overall quiz grade: 0.00 %" fx:id="averageQuizLabel">
-	  <VBox.margin>
-		 	<Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-	  </VBox.margin>
-	  </Label>
       <Button mnemonicParsing="false" onAction="#calculateGrade" text="Calculate Grade">
       	<VBox.margin>
 			<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
