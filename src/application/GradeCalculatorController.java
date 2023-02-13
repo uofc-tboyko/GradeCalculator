@@ -35,9 +35,6 @@ public class GradeCalculatorController {
     @FXML
     private Label projectErrorLabel;
     
-<<<<<<< HEAD
-    
-=======
     @FXML
     private Label requiredQuizLabel;
     
@@ -164,23 +161,14 @@ public class GradeCalculatorController {
     	} 
     	return projectGrade;
     }
->>>>>>> branch 'master' of https://github.com/uofc-tboyko/GradeCalculator/
     
     @FXML
     void calculateGrade(ActionEvent event) {
     	projectErrorLabel.setText("");
-<<<<<<< HEAD
-    	double courseGrade = 0;
-    	//retrieve the project grade and add 50% to the course grade
-    	
-    	//retrieve the quiz grade and add 25% to the course grade
-    	double quizGrade = quizSlider.getValue();
-    	courseGrade += (quizGrade*10)*.25;
-=======
+
     	double courseGrade = 0.0;
     	double projectGrade = getProjectGrade(projectGradeTextField.getText());
     	System.out.println("Project Grade: "+projectGrade);
->>>>>>> branch 'master' of https://github.com/uofc-tboyko/GradeCalculator/
     	
     	//retrieve the choice box values for the quizzes and add 25% of the total percent to the final grade.
     	double totalChalGrade = (optPassedChoiceBox.getValue() + challengesPassedChoiceBox.getValue())*5;
