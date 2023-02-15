@@ -48,13 +48,29 @@ public class GradeCalculatorController {
     double reqQGrade = 0.0;
 
     @FXML
+    /**
+     * calls getQuizGrades with the true parameter on quizzesOptional
+     * 
+     * @param getoptQGrades the actionEent used to call the function
+     */
     void getOptionalQuizGrades(ActionEvent getoptQGrades) {
     	getQuizGrades(true, optionalQuizzesCompletedChoiceBox.getValue());
     }
+    /**
+     * calls getQuizGrades with the false parameter on quizzesOptional
+     * 
+     * @param getreqQGrades the actionEent used to call the function
+     */
     @FXML
     void getRequiredQuizGrades(ActionEvent getreqQGrades) {
     	getQuizGrades(false, requiredQuizzesCompletedChoiceBox.getValue());
     }
+    /**
+     * Creates and switches to a scene with entry positions for either required or optional quiz grades
+     * 
+     * @param quizzesOptional Whether we're creating a scene for optional or required quizzes
+     * @param numberOfQuizzes The number of quizzes we're looking through
+     */
     void getQuizGrades(boolean quizzesOptional, int numberOfQuizzes) {
     	//define vars
 
@@ -92,7 +108,14 @@ public class GradeCalculatorController {
 		Scene quizGradesScene = new Scene(quizGradeContainer);
 		applicationStage.setScene(quizGradesScene);
     }
-    
+    /**
+     * Takes the array of quiz text fields from getQuizGrades and calculates the average between them, 
+     * storing in the appropriate variable
+     * 
+     * @param mainScene The scene we return to once entry is finished
+     * @param quizGradeTextFields The ArrayList of text fields to be iterated through
+     * @param quizzesOptional whether we are calculating optional quiz grades.
+     */
     void calculateAverageQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextFields, boolean quizzesOptional) {
 		String errorMessage = "";
 		boolean errorInQuizGrade = false;
@@ -139,6 +162,11 @@ public class GradeCalculatorController {
     }
     
     @FXML
+    /**
+     * The calculateGrade function calculates the final course grade and sets the bottom label to match.
+     * 
+     * @param event FXML event used to call the function on button click
+     */
     void calculateGrade(ActionEvent event) {
     	projectErrorLabel.setText("");
     	
