@@ -12,18 +12,9 @@ public class CCArrayList {
 		return -1;
 	}
 	public static void insert(ArrayList<Double> nums, double numToInsert, int insertAtIndex) {
-		System.out.println(nums);
-		if(nums.size()<insertAtIndex) {
+		if(nums.size()==0) {
 			return;
 		}
-		double prev = nums.get(insertAtIndex);
-		double last = nums.get(nums.size()-1);
-		nums.set(insertAtIndex, numToInsert);
-		for(int i = insertAtIndex+1; i<nums.size();i++) {
-			nums.set(i, prev);
-			prev = nums.get(i);
-		}
-		nums.add(last);
-		System.out.println(nums);
+		nums.add(insertAtIndex,numToInsert);
 	}
 }
