@@ -145,7 +145,6 @@ public class CCArraysTest {
 	public void test_sortAlphabetic_unSortedListMixedCase() {
 		String[] strs = {"Mno", "Def","abc", "ghi", "Pqr","Stu","vwxyz", "Jkl"};
 		CCArrays.sortAlphabetic(strs);
-		System.out.println(strs);
 		assertEquals("Sorting a list should leave length unchanged.", 8, strs.length);
 		assertEquals("Sorting an unsorted list, testing first element.", "abc", strs[0]);
 		assertEquals("Sorting an unsorted list, testing second element.", "Def", strs[1]);
