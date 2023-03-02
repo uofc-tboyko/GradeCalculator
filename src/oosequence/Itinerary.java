@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Itinerary {
-	private ArrayList<Flight> flights;
+	private ArrayList<TripComponent> flights;
 	private String name;
 	
 	Itinerary(String nameIn){
 		name=nameIn;
-		flights = new ArrayList<Flight>();
+		flights = new ArrayList<TripComponent>();
 	}
-	ArrayList<Flight> getFlights(){
+	ArrayList<TripComponent> getFlights(){
 		return flights;
 	}
 	String getName() {
@@ -19,8 +19,8 @@ public class Itinerary {
 	}
 	
 	//hard part goes below here
-	public void addFlight(Flight flight) {
-	    for (Flight f : flights) {
+	public void addFlight(TripComponent flight) {
+	    for (TripComponent f : flights) {
 	        if ((flight.getArrival().after(f.getDeparture()))&&flight.getDeparture().before(f.getArrival())) {
 	        	return;
 	        } 
@@ -39,7 +39,7 @@ public class Itinerary {
 			return 0;
 		}
 		long lay = (flights.get(flights.size()-1).getArrival().getTime()-flights.get(0).getDeparture().getTime())/60000;
-		for(Flight f :flights) {
+		for(TripComponent f :flights) {
 			lay-=f.length();
 		}
 		return lay;
