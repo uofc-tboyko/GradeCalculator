@@ -20,7 +20,7 @@ public class FlightTest {
 	public void test_getter_setter_arrivalAirport_validAirport(){
 		
 
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setArrivalAirport("BAC");
 		assertEquals("Set arrival airport to BAC", "BAC", c.getArrivalAirport());
 	}
@@ -29,14 +29,14 @@ public class FlightTest {
 	public void test_getter_setter_departureAirport_Invalid_TooShort(){
 		
 
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setDepartureAirport("YY");
 		assertEquals("Set departure airport to YY", "", c.getDepartureAirport());
 	}
 	
 	@Test
 	public void test_getter_setter_setTwice() {
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setDepartureAirport("YYY");
 		c.setDepartureAirport("WXYZ");
 		assertEquals("Changed departure airport from YYY to WXYZ", "", c.getDepartureAirport());
@@ -45,21 +45,21 @@ public class FlightTest {
 	
 	@Test
 	public void test_getter_setter_arrivalAirport_Invalid_TooLong(){
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setArrivalAirport("BABA");
 		assertEquals("Set arrival airport to BABA", "", c.getArrivalAirport());
 	}
 	
 	@Test
 	public void test_getter_setter_departureAirport_Invalid_null(){
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setDepartureAirport(null);
 		assertEquals("Set departure airport to null", "", c.getDepartureAirport());
 	}
 	
 	@Test
 	public void test_getter_setter_arrivalAirport_Invalid_null(){
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setArrivalAirport(null);
 		assertEquals("Set arrival airport to null", "", c.getArrivalAirport());
 	}
@@ -67,7 +67,7 @@ public class FlightTest {
 	@Test
 	public void test_getDuration_startOneHourAndTenMinutesBeforeEnd() {
 		
-		TripComponent c = new TripComponent();
+		Flight c = new Flight();
 		c.setStart(getDate(2018,11,28,10,20));
 		c.setEnd(getDate(2018,11,28,11,30));
 		String expectedDuration = "70 minutes";

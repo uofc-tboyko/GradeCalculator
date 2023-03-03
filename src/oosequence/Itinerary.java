@@ -21,13 +21,13 @@ public class Itinerary {
 	//hard part goes below here
 	public void addFlight(TripComponent flight) {
 	    for (TripComponent f : flights) {
-	        if ((flight.getArrival().after(f.getDeparture()))&&flight.getDeparture().before(f.getArrival())) {
+	        if ((flight.getEnd().after(f.getStart()))&&flight.getStart().before(f.getEnd())) {
 	        	return;
 	        } 
 	    }
 	    int i;
 	    for (i = 0; i < flights.size(); i++) {
-	        if (flight.getArrival().before(flights.get(i).getArrival())) {
+	        if (flight.getEnd().before(flights.get(i).getEnd())) {
 	            break;
 	        }
 	    }
@@ -38,9 +38,9 @@ public class Itinerary {
 		if(flights.size()<=1) {
 			return 0;
 		}
-		long lay = (flights.get(flights.size()-1).getArrival().getTime()-flights.get(0).getDeparture().getTime())/60000;
+		long lay = (flights.get(flights.size()-1).getEnd().getTime()-flights.get(0).getStart().getTime())/60000;
 		for(TripComponent f :flights) {
-			lay-=f.length();
+			lay-=f.lengthInSeconds();
 		}
 		return lay;
 	}
