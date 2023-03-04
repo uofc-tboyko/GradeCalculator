@@ -1,8 +1,23 @@
 package oosequence;
 
+import java.util.Date;
+
 public class Flight extends TripComponent{
 	private String departureAirport;
 	private String arrivalAirport;
+	
+	Flight(Date startDate, Date endDate, String departure, String arrival){
+		setDepartureAirport(departure);
+		setArrivalAirport(arrival);
+		setStart(startDate);
+		setEnd(endDate);
+	}
+	
+	Flight(Flight toCopy){
+		super(toCopy);
+		setDepartureAirport(toCopy.departureAirport);
+		setArrivalAirport(toCopy.arrivalAirport);
+	}
 	
 	String getDepartureAirport() {
 		return departureAirport;
@@ -32,6 +47,14 @@ public class Flight extends TripComponent{
 		}else {
 			arrivalAirport="";
 		}
+	}
+	
+	String getStart() {
+		return  (departureAirport + " " + super.getStart());
+	}
+	
+	String getEnd() {
+		return (arrivalAirport + " " + super.getEnd());
 	}
 	
 	String getDuration() {
