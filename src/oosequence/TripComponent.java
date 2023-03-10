@@ -6,12 +6,16 @@ public class TripComponent {
 	private Date end;
 	
 	TripComponent(Date startDate, Date endDate){
-		if(startDate==null || endDate==null || startDate.before(endDate)) {
-			start = startDate;
-			end = endDate;
+		if(startDate!=null) {
+			start= new Date(startDate.getTime());
+		}
+		
+		if(endDate == null) {
+			
+		}else if(start!=null && (endDate.before(startDate)||endDate.equals(startDate))) { 
+
 		} else {
-			start =startDate;
-			end=null;
+			end = new Date(endDate.getTime());
 		}
 	}
 	
@@ -30,12 +34,18 @@ public class TripComponent {
 		return (end==null||start==null);
 	}
 	
-	Date getStart() {
-		return start;
+	String getStart() {
+		if(start!=null) {
+			return start.toString();
+		}
+		return "";
 	}
 
-	Date getEnd() {
-		return end;
+	String getEnd() {
+		if(end!=null) {
+			return end.toString();
+		}
+		return "";
 	}
 
 	void setStart(Date depSet) {
@@ -60,8 +70,24 @@ public class TripComponent {
 		}
 		
 	}
+	
+	public boolean isBefore(TripComponent other) {
+        return this.start.before(other.start);
+    }
+	
+	public boolean isAfter(TripComponent other) {
+		return !isBefore(other);
+	}
+	
+	boolean overlapsWith(TripComponent other) {
+		if(other.nullFlight()||this.nullFlight()) {
+			return false;
+		}
+		
+		return (this.end.after(other.start)&&other.end.after(this.start));
+	}
 
-	long lengthInSeconds() {
+	protected long lengthInSeconds() {
 		if(end==null||start==null) {
 			return 0;
 		}
