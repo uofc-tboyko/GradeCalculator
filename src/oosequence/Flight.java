@@ -5,49 +5,62 @@ public class Flight {
 	private Date departure;
 	private Date arrival;
 	
+	//Constructor with 2 dates, sets each date to the input
 	Flight(Date departureDate, Date arrivalDate){
-		if(departureDate==null || arrivalDate==null||departureDate.before(arrivalDate)) {
-			departure = departureDate;
-			arrival = arrivalDate;
+		//check if the input departure is before the arrival and that they are not the same
+		if(departureDate == null &&arrivalDate!=null) {
+			departure = null;
+			setArrival(arrivalDate);
+			return;
 		}
-	}
-	
-	boolean nullFlight() {
-		return (arrival==null||departure==null);
+		if(arrivalDate ==null && departureDate != null) {
+			arrival=null;
+			setDeparture(departureDate);
+			return;
+		}
+		if(arrivalDate==null && departureDate == null) {
+			return;
+		}
+		if(departureDate.before(arrivalDate)&& !departureDate.equals(arrivalDate)) {
+			
+			setDeparture(departureDate);
+			setArrival(arrivalDate);
+		}
 	}
 	
 	Flight(Flight old){
-		arrival = old.arrival;
-		departure = old.departure;
+		this(old.departure,old.arrival);
+	}
+	
+	boolean nullFlight() {
+		return (departure ==null ||arrival == null);
 	}
 
 	Date getDeparture() {
-		return departure;
+		if(departure == null) {
+			return null;
+		}
+		return new Date(departure.getTime());
 	}
 
 	Date getArrival() {
-		return arrival;
+		if(arrival == null) {
+			return null;
+		}
+		return new Date(arrival.getTime());
 	}
 
 	void setDeparture(Date depSet) {
-		if(depSet==null) {
-			return;
-		}
-		if(this.nullFlight()) {
-			departure=depSet;
-		}else if(depSet.before(arrival)) {
-			departure = depSet;
+		//we will only change the departure if:
+		//the flight has a null arrival or departure, or there is no overlap between the arrival or departure.
+		if(nullFlight()||(!depSet.equals(arrival)&&depSet.before(arrival))) {
+			departure = new Date(depSet.getTime());
 		}
 	}
 	
 	void setArrival(Date arrSet) {
-		if(arrSet==null) {
-			return;
-		}
-		if(this.nullFlight()) {
-			arrival=arrSet;
-		}else if(departure.before(arrSet)) {
-			arrival=arrSet;
+		if(nullFlight()||(!arrSet.equals(departure)&&arrSet.after(departure))) {
+			arrival = new Date(arrSet.getTime());
 		}
 		
 	}

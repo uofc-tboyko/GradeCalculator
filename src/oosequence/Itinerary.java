@@ -1,7 +1,6 @@
 package oosequence;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Itinerary {
 	private ArrayList<Flight> flights;
@@ -11,9 +10,7 @@ public class Itinerary {
 		name=nameIn;
 		flights = new ArrayList<Flight>();
 	}
-	ArrayList<Flight> getFlights(){
-		return flights;
-	}
+
 	String getName() {
 		return name;
 	}
@@ -31,7 +28,7 @@ public class Itinerary {
 	            break;
 	        }
 	    }
-	    flights.add(i, flight);
+	    flights.add(i, new Flight(flight));
 	}
 	
 	long getTotalLayover() {
@@ -43,6 +40,10 @@ public class Itinerary {
 			lay-=f.length();
 		}
 		return lay;
+	}
+	
+	ArrayList<Flight> getFlightList(){
+		return flights;
 	}
 
 }
