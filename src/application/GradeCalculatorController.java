@@ -127,8 +127,14 @@ public class GradeCalculatorController {
     		Grade optionalGrade = new Grade(0,10,0.2);
     		
 			for (TextField quizGradeTextField : quizGradeTextFields) {
-				errorMessage = optionalGrade.setValue(quizGradeTextField.getText());
-				optionalGrades.add(optionalGrade.getWeightedPercentageGrade());
+				Grade bigGrade;
+				try {
+					bigGrade = new Grade(quizGradeTextField.getText(),10,0.2);
+					optionalGrades.add(bigGrade.getWeightedPercentageGrade());
+				}catch(Exception e) {
+					errorMessage=e.getMessage();
+				}
+				
 				if(errorMessage!="") {
 					errorInQuizGrade = true;
 					quizErrorLabel.setText(errorMessage);
@@ -140,15 +146,20 @@ public class GradeCalculatorController {
 				optQGrade+=optionalGrades.get(i);
 			}
 			optionalQuizLabel.setText(String.format("Average: %.2f",optQGrade)+"%");
+			
+    		
     	} 
     	
     	//for the required quizzes we add all of them to the total and make it out of 15.
     	else {
 		reqQGrade = 0;
 			for (TextField quizGradeTextField : quizGradeTextFields) {
-				Grade requiredGrade = new Grade(0,10,(1.0/15.0));
-				errorMessage = requiredGrade.setValue(quizGradeTextField.getText());
-				reqQGrade += requiredGrade.getWeightedPercentageGrade();
+				try {
+					Grade bigGrade = new Grade(quizGradeTextField.getText(),10,1.0/15.0);
+					reqQGrade += bigGrade.getWeightedPercentageGrade();
+				} catch (Exception e) {
+					errorMessage = e.getMessage();
+				}
 				if(errorMessage!="") {
 					errorInQuizGrade = true;
 					quizErrorLabel.setText(errorMessage);
@@ -168,11 +179,16 @@ public class GradeCalculatorController {
      * @param event FXML event used to call the function on button click
      */
     void calculateGrade(ActionEvent event) {
+    	double courseGrade= 0.0;
     	projectErrorLabel.setText("");
     	
     	//project grade calculations
-    	Grade myProjectGrade = new Grade(0.0, 100, 0.5);
-    	projectErrorLabel.setText(myProjectGrade.setValue(projectGradeTextField.getText()));
+    	Grade myProjectGrade = new Grade(0,100,0.5);
+    	try {
+			myProjectGrade = new Grade(projectGradeTextField.getText(), 100, 0.5);
+    	} catch(Exception e) {
+			projectErrorLabel.setText(e.getMessage());
+    	}
     	
     	Grade optionalQuizGrade = new Grade(optQGrade,100,0.0625);
     	
@@ -180,7 +196,7 @@ public class GradeCalculatorController {
     	
     	Grade codingChallengeGrade = new Grade(optPassedChoiceBox.getValue() + challengesPassedChoiceBox.getValue(),20,0.25);
     	
-    	double courseGrade = myProjectGrade.getWeightedPercentageGrade()+
+    	courseGrade = myProjectGrade.getWeightedPercentageGrade()+ 
     			optionalQuizGrade.getWeightedPercentageGrade()+
     			requiredQuizGrade.getWeightedPercentageGrade()+
     			codingChallengeGrade.getWeightedPercentageGrade();
